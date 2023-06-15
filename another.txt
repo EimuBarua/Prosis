@@ -1,0 +1,115 @@
+            // Overidding methods
+            $.validator.prototype.errorsFor = function (element) {
+                var name = this.idOrName(element);
+                var elementParent = element.parentElement;
+                return this.errors().filter(function () {
+                    return $(this).attr("for") == name && $(this).parent().is(elementParent);
+                });
+            };
+            $.validator.prototype.checkForm = function () {
+                this.prepareForm();
+                for (
+                    var i = 0, elements = (this.currentElements = this.elements());
+                    elements[i];
+                    i++
+                ) {
+                    if (
+                        this.findByName(elements[i].name).length != undefined &&
+                        this.findByName(elements[i].name).length > 1
+                    ) {
+                        for (
+                            var cnt = 0;
+                            cnt < this.findByName(elements[i].name).length;
+                            cnt++
+                        ) {
+                            this.check(this.findByName(elements[i].name)[cnt]);
+                        }
+                    } else {
+                        this.check(elements[i]);
+                    }
+                }
+                return this.valid();
+            };
+
+
+            
+
+
+            // Initializing Variables With Regular Expressions
+            var task_regex = /^[a-zA-Z0-9 ]+$/;
+
+            $.validator.addMethod(
+                "taskCheck",
+                function (value, element) {
+                    return value.match(task_regex);
+                },
+                "Invalid Task"
+            );
+
+            $("#assignTask").validate({
+                rules: {
+                    "task[]": {
+                        required: true,
+                        taskCheck: true,
+                    }
+                },
+                messages: {
+                    "task[]": {
+                        required: "This field is mandatory",
+                    },
+                  
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            $("#submitBtn").click(function(e){
+                // alert("Submitted");
+                e.preventDefault();
+                const name = $.map($('input[type=text][name="task[]"]'), function (el) {
+                    return el.value;
+                });
+                const date= $('#date').val();
+                console.log(date);
+                // console.log(name);
+                checkDuplicate(name);
+                console.log($submitted); 
+                if($submitted){ 
+                    console.log($submitted);       
+                    $("#assignTask").submit(function(e) {
+
+                        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+                        $.ajax({
+                            url: "postTasks.php",
+                            type: "GET",
+                            data: {
+                                date: date,
+                                name: name,
+                            },
+                            success: function (res) {
+                                console.log(res);
+                            },
+                        });
+                        console.log('g');
+
+                    });
+                }
+            });

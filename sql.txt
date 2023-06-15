@@ -1,0 +1,324 @@
+DROP DATABASE IF EXISTS TestDb;
+Database name: prosis_db;
+Character set: utf8mb4_unicode_ci
+<-----------  ---------------->
+<-----x------ ---------x------->
+
+<-----------Running Group---------------->
+
+Show{
+    features:filter Option,
+    GroupName:Students_name,
+    button{
+        view,--------------> clicked to navigate Group Progress page.
+        assign task.----------------->clicked to navigate assign task page.
+    }
+}
+<-----x------Running Group----------x------>
+
+
+
+<----------- Group Progress  ---------------->
+
+All Task assign dates will de displayed here for corresponding group.{
+    Once "assign date's" all tasks are completed green tick will be shown.
+    Else gray tick(disabled).
+} 
+
+whenever a date will clicked this will open up a modal with corresponding task.{
+    completed task will be checked.Else unchaked{
+        checkbox.
+    }.
+}
+
+<-----x------ Group Progress ---------x------->
+
+
+<----------- Assign Task ---------------->
+
+Input field : date,
+Input field : Task description,
+Button      : when clicked a new Input field(Task description) will be added.
+Button      : Submit. 
+
+<-----x------ Assign Task ---------x------->
+
+
+
+
+
+
+<================== Database Tables ======================>
+
+Database name: prosis_db;
+Character set: utf8mb4_unicode_ci
+<-----------  ---------------->
+<-----x------ ---------x------->
+
+
+    <----------- students ---------------->
+
+    CREATE TABLE students(
+
+        id BIGINT NOT NULL PRIMARY KEY,
+
+        first_name  VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        last_name  VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        email VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        phone VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        sess_ion VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+      
+        batch VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+      
+        date_of_birth VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+      
+        gender VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+      
+        address VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+      
+        pass VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci
+
+
+    )ENGINE = INNODB;
+
+    <-----x------ students ---------x------->
+
+
+    <----------- Teachers ---------------->
+    
+    CREATE TABLE teachers(
+
+        id BIGINT NOT NULL PRIMARY KEY,
+
+        first_name  VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        last_name  VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        email VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        phone VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        date_of_birth VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+      
+        gender VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+      
+        address VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+      
+        pass VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci
+
+
+    )ENGINE = INNODB;
+
+
+    <-----x------ Teachers ---------x------->
+
+
+    <----------- Groups  ---------------->
+    CREATE TABLE groups(
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        name  VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+        supervisor_id BIGINT NOT NULL,
+        FOREIGN KEY (supervisor_id) REFERENCES teachers(id)
+    )ENGINE = INNODB;
+    <-----x------ Groups  ---------x------->
+
+
+    <----------- Group members ---------------->
+    CREATE TABLE group_members(
+        group_id INT NOT NULL,
+        student_id BIGINT NOT NULL,
+        FOREIGN KEY (group_id) REFERENCES groups(id),
+        FOREIGN KEY (student_id) REFERENCES students(id)
+    )ENGINE = INNODB;  
+    <-----x------ Group members ---------x------->
+
+
+
+    <----------- Assign Task  ---------------->
+    CREATE TABLE task(
+        id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+        group_id INT NOT NULL,
+        date DATE,
+        task_details VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+        task_description VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+        status BOOLEAN,
+        student_id BIGINT,
+        FOREIGN KEY (group_id) REFERENCES groups(id),
+        FOREIGN KEY (student_id) REFERENCES students(id)
+      
+    )ENGINE = INNODB;  
+    <-----x------ Assign Task ---------x------->
+
+
+
+
+    <-----------  ---------------->
+    <-----x------ ---------x------->
+    <-----------  ---------------->
+    <-----x------ ---------x------->
+    <-----------  ---------------->
+    <-----x------ ---------x------->
+    <-----------  ---------------->
+    <-----x------ ---------x------->
+
+<==============x============= Database Tables ==============x=============>
+
+INSERT INTO students(id,first_name,last_name,email,phone,sess_ion,batch,date_of_birth,gender,address,pass)
+VALUES
+(1725,'Rajesh','Pal','ajoypal.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234');
+
+
+INSERT INTO students(id,first_name,last_name,email,phone,sess_ion,batch,date_of_birth,gender,address,pass)
+VALUES
+(1726,'Ajoy','Pal','ajoy.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1727,'Arnob','Pal','arnob.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1728,'Sobuj','Pal','sobuj.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1729,'Red','Pal','red.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1730,'Yellow','Pal','yellow.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1731,'Ron','Pal','ron.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234');
+
+
+
+INSERT INTO students(id,first_name,last_name,email,phone,sess_ion,batch,date_of_birth,gender,address,pass)
+VALUES
+(1734,'Ajoy','Pal','ajoy.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1734,'Arnob','Pal','arnob.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1734,'Sobuj','Pal','sobuj.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1735,'Red','Pal','red.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1736,'Yellow','Pal','yellow.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234'),
+(1737,'Ron','Pal','ron.raj@gmail.com','01839764101','spring2020','35','2022-02-12','male','Rangamati','1234');
+
+
+
+
+<========teachers============>
+
+INSERT INTO teachers(id,first_name,last_name,email,phone,date_of_birth,gender,address,pass)
+VALUES
+(17001,'Ajoy','Pal','ajoy.raj@gmail.com','01839764101','2022-02-12','male','Rangamati','1234'),
+(17002,'Arnob','Pal','arnob.raj@gmail.com','01839764101','2022-02-12','male','Rangamati','1234'),
+(17003,'Sobuj','Pal','sobuj.raj@gmail.com','01839764101','2022-02-12','male','Rangamati','1234'),
+(17004,'Red','Pal','red.raj@gmail.com','01839764101','2022-02-12','male','Rangamati','1234'),
+(17005,'Yellow','Pal','yellow.raj@gmail.com','01839764101','2022-02-12','male','Rangamati','1234'),
+(17006,'Ron','Pal','ron.raj@gmail.com','01839764101','2022-02-12','male','Rangamati','1234');
+
+
+<=====x===teachers=======x=====>
+
+
+<=========Groups==============>
+
+INSERT INTO groups(name,supervisor_id)
+VALUES
+('rajesh',17001),
+('ajoy',17002),
+('yellow',17003),
+('arnob',17004),
+('sobuj',17005),
+('red',17006)
+
+
+<======x===Groups===x===========>
+
+
+
+
+<=========Group_members==============>
+
+INSERT INTO group_members(group_id,student_id)
+VALUES
+(1731,1725),
+(1734,1726),
+(1734,1727),
+(1734,1728),
+(1735,1729),
+(1736,1730)
+
+
+<======x===Group_members===x===========>
+<=========Task==============>
+INSERT INTO task(group_id,date,task_details,status)
+VALUES
+(1731,'2022-4-12','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-12','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-12','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-12','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-12','Lorem ipsum dolor sit amet.',0),
+
+
+(1731,'2022-4-13','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-13','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-13','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-14','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-14','Lorem ipsum dolor sit amet.',0),
+
+(1731,'2022-4-15','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-16','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-16','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-17','Lorem ipsum dolor sit amet.',0),
+(1731,'2022-4-18','Lorem ipsum dolor sit amet.',0)
+
+
+
+
+INSERT INTO task(group_id,date,task_details,status)
+VALUES
+(1734,'2022-4-12','This is task no 1',0),
+(1734,'2022-4-12','This is task no 2',0),
+(1734,'2022-4-12','This is task no 3',0),
+(1734,'2022-4-12','This is task no 4',0),
+(1734,'2022-4-12','This is task no 5',0),
+
+
+(1734,'2022-4-13','This is task no 6',0),
+(1734,'2022-4-13','This is task no 7',0),
+(1734,'2022-4-13','This is task no 8',0),
+(1734,'2022-4-14','This is task no 9',0),
+(1734,'2022-4-14','This is task no 10',0),
+
+
+(1734,'2022-4-15','This is task no 11',0),
+(1734,'2022-4-16','This is task no 12',0),
+(1734,'2022-4-16','This is task no 13',0),
+(1734,'2022-4-17','This is task no 14',0),
+(1734,'2022-4-18','This is task no 15',0)
+
+<======x===Task===x===========>
+
+
+<-----------------27 Apr 22----------------->
+ALTER TABLE task
+ADD COLUMN student_id BIGINT; 
+
+ALTER TABLE task 
+ADD FOREIGN KEY (`student_id` ) REFERENCES `students` (`id` );
+
+ALTER TABLE task
+ADD COLUMN task_description VARCHAR(1000) AFTER task_details; 
+
+<---------x--------27 Apr 22---------x-------->
+
+    CREATE TABLE comments(
+
+        post_id BIGINT NOT NULL PRIMARY KEY,
+
+        post_text VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci,
+
+        post_user_id  BIGINT NOT NULL,
+
+
+        post_group_id INT NOT NULL,
+        
+        post_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+        FOREIGN KEY (post_group_id) REFERENCES groups(id),
+
+        FOREIGN KEY (post_user_id) REFERENCES students(id)
+
+
+    )ENGINE = INNODB;
+
